@@ -2,7 +2,8 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-
+const cheerio = require("cheerio");
+const axios = require("axios");
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
@@ -56,6 +57,33 @@ app.get("/all", (req, res) => {
             res.json(err);
         })
 })
+
+// Scrape Route
+app.get("/scrape", (req, res) => {
+    var scrapeData = [];
+    scrapeData.push({
+        title: "test title",
+        link: "test link"
+    });
+    // This is not working / Should it be request instead of axios? 
+    axios.get("https://www.nytimes.com/section/world")
+        .then(resonse => {
+            const $ = cheerio.load(html);
+            // css-xei2dc Selects li elements
+            $(".css-xei2dc").each((i, element) => {
+                var title = $(this).children("a").text();
+                var link = $(this).children("a").attr("href");
+                if (title && link) {
+                    console.log("title and link exist");
+                    scrapeData.push({
+                        title: title,
+                        link: link
+                    });
+                }
+            });
+        })
+    res.json(scrapeData)
+});
 
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
