@@ -5,21 +5,16 @@ var Schema = mongoose.Schema;
 
 const ArticleSchema = new Schema({
     // * Title
-    // * Summary
-    // * URL
+    // * link
+    // * image
+    // * summary
 
     title: {
         type: String,
         trim: true,
         required: "Title is Required"
     },
-    summary: {
-        type: String,
-        trim: true,
-        required: "Summary is Required"
-    },
-
-    url: {
+    link: {
         type: String,
         trim: true,
         required: "URL is Required"
@@ -27,7 +22,12 @@ const ArticleSchema = new Schema({
     image: {
         type: String,
         trim: true,
-        required: "URL is Required"
+        required: "image is Required"
+    },
+    summary: {
+        type: String,
+        trim: true,
+        required: "Summary is Required"
     }
 });
 

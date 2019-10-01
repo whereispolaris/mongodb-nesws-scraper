@@ -69,12 +69,13 @@ app.get("/scrape", (req, res) => {
                 var title = $(element).children("a").children("h2").text();
                 var link = "https://www.nytimes.com/" + $(element).children("a").attr("href");
                 var image = $(element).children("a").children(".css-79elbk").children("figure").attr("itemid");
-                console.log(image);
+                var summary = $(element).children("a").children(".css-1echdzn").text();
 
                 scrapeData.push({
                     title: title,
                     link: link,
-                    image: image
+                    image: image,
+                    summary: summary
                 });
             });
             res.json(scrapeData);
