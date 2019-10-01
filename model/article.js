@@ -23,6 +23,11 @@ const ArticleSchema = new Schema({
         type: String,
         trim: true,
         required: "URL is Required"
+    },
+    image: {
+        type: String,
+        trim: true,
+        required: "URL is Required"
     }
 });
 

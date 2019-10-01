@@ -61,28 +61,25 @@ app.get("/all", (req, res) => {
 // Scrape Route
 app.get("/scrape", (req, res) => {
     var scrapeData = [];
-    scrapeData.push({
-        title: "test title",
-        link: "test link"
-    });
-    // This is not working / Should it be request instead of axios? 
     axios.get("https://www.nytimes.com/section/world")
-        .then(resonse => {
-            const $ = cheerio.load(html);
-            // css-xei2dc Selects li elements
-            $(".css-xei2dc").each((i, element) => {
-                var title = $(this).children("a").text();
-                var link = $(this).children("a").attr("href");
-                if (title && link) {
-                    console.log("title and link exist");
-                    scrapeData.push({
-                        title: title,
-                        link: link
-                    });
-                }
+        .then(response => {
+            const $ = cheerio.load(response.data);
+
+            $(".css-1l4spti").each((i, element) => {
+                var title = $(element).children("a").children("h2").text();
+                var link = "https://www.nytimes.com/" + $(element).children("a").attr("href");
+                var image = $(element).children("a").children(".css-79elbk").children("figure").attr("itemid");
+                console.log(image);
+
+                scrapeData.push({
+                    title: title,
+                    link: link,
+                    image: image
+                });
             });
-        })
-    res.json(scrapeData)
+            res.json(scrapeData);
+        });
+    // This is not working yet 
 });
 
 app.listen(PORT, function () {
