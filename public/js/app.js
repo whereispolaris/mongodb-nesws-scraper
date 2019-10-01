@@ -4,33 +4,34 @@ $("#scrape-button").on("click", event => {
         console.log(data[0].image);
 
         for (var i = 0; i < data.length; i++) {
+            var horiCard = $("<div>");
+            horiCard.addClass("card horizontal");
+            var imgCard = $("<div>");
+            imgCard.addClass("card-image");
+            var image = $("<img>");
+            image.attr("src", data[i].image);
+            var cardStacked = $("<div>");
+            cardStacked.addClass("card-stacked");
+            var cardContent = $("<div>");
+            cardContent.addClass("card-content");
+            var h3Tag = $("<h5>");
+            h3Tag.text(data[i].title);
+            var pTag = $("<p>");
+            pTag.text(data[i].summary);
+            var cardAction = $("<div>");
+            cardAction.addClass("card-action");
+            var cardLink = $("<a>");
+            cardLink.attr("href", "https://www.nytimes.com/" + data[i].link);
+            cardLink.text("Save Article");
 
-            // <div class="card horizontal">
-            //     <div class="card-image">
-            //         <img src="https://lorempixel.com/100/190/nature/6">
-            //     </div>
-            //     <div class="card-stacked">
-            //         <div class="card-content">
-            //             <p>I am a very simple card. I am good at containing small bits of information.</p>
-            //         </div>
-            //         <div class="card-action">
-            //             <a href="#">This is a link</a>
-            //         </div>
-            //     </div>
-            // </div>
+            cardAction.append(cardLink);
+            cardContent.append(h3Tag, pTag);
+            cardStacked.append(cardContent, cardAction);
+            imgCard.append(image);
+            horiCard.append(imgCard, cardStacked);
 
-            // Add card to homepage div
             $("#articleContainer").append(horiCard);
 
         }
     });
 });
-
-// horiCard.append(imgCard, cardStacked)
-//     imgCard.append(image)
-//         image
-//     cardStacked.append(cardContent, cardAction)
-//         cardContent.append(pTag)
-//             pTag
-//         cardAction.append(cardLink)
-//             cardLink
