@@ -23,6 +23,14 @@ body {
   flex: 1 0 auto;
 }
 
+.card-image img {
+  padding: 0;
+  margin: 24px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
 .jumbo {
   background: url('../img/newpapers.jpg') center;
   background-color: #cccccc; /* Used if the image is unavailable */
