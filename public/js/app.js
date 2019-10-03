@@ -5,7 +5,9 @@ $("#scrape-button").on("click", event => {
 
         for (var i = 0; i < data.length; i++) {
             var horiCard = $("<div>");
-            horiCard.addClass("card horizontal");
+            horiCard.attr({
+                class: "card horizontal"
+            })
             var imgCard = $("<div>");
             imgCard.addClass("card-image");
             var image = $("<img>");
@@ -20,11 +22,15 @@ $("#scrape-button").on("click", event => {
             pTag.text(data[i].summary);
             var cardAction = $("<div>");
             cardAction.addClass("card-action");
-            var cardLink = $("<a>");
-            cardLink.attr("href", "https://www.nytimes.com/" + data[i].link);
-            cardLink.text("Save Article");
+            var cardButton = $("<button>");
+            cardButton.attr({
+                "href": "https://www.nytimes.com/" + data[i].link,
+                id: i,
+                class: "waves-effect waves-light btn orange"
+            });
+            cardButton.text("Save Article");
 
-            cardAction.append(cardLink);
+            cardAction.append(cardButton);
             cardContent.append(h3Tag, pTag);
             cardStacked.append(cardContent, cardAction);
             imgCard.append(image);
@@ -35,3 +41,23 @@ $("#scrape-button").on("click", event => {
         }
     });
 });
+
+$(".btn").click(event => {
+    event.preventDefault();
+    console.log("something happened");
+});
+
+// To Do
+// POST
+// - Add Index to card
+// - Create onclick event that 
+//      * gets the index value
+//      * makes $.getJSON request
+//      * use index index value to get post
+//      * save object to variable (artibleBody)
+//      * make POST request with artibleBody
+
+// Saved Articles
+// make GET request to "/saved"
+// Generate cards
+
