@@ -22,15 +22,22 @@ $("#scrape-button").on("click", event => {
             pTag.text(data[i].summary);
             var cardAction = $("<div>");
             cardAction.addClass("card-action");
-            var cardButton = $("<button>");
+            var cardButton = $("<a>");
             cardButton.attr({
-                "href": "https://www.nytimes.com/" + data[i].link,
+                "href": "#",
                 id: i,
                 class: "waves-effect waves-light btn orange"
             });
             cardButton.text("Save Article");
+            var linkButton = $("<a>");
+            linkButton.attr({
+                "href": data[i].link,
+                id: i,
+                class: "waves-effect waves-light btn blue"
+            });
+            linkButton.text("Go to Article");
 
-            cardAction.append(cardButton);
+            cardAction.append(cardButton, linkButton);
             cardContent.append(h3Tag, pTag);
             cardStacked.append(cardContent, cardAction);
             imgCard.append(image);
