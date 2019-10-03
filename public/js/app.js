@@ -1,58 +1,62 @@
-$("#scrape-button").on("click", event => {
-    event.preventDefault();
-    $.getJSON("/scrape", data => {
-        console.log(data[0].image);
+$(document).ready(function () {
+    $("#scrape-button").on("click", event => {
+        event.preventDefault();
+        $.getJSON("/scrape", data => {
+            console.log(data[0].image);
 
-        for (var i = 0; i < data.length; i++) {
-            var horiCard = $("<div>");
-            horiCard.attr({
-                class: "card horizontal"
-            })
-            var imgCard = $("<div>");
-            imgCard.addClass("card-image");
-            var image = $("<img>");
-            image.attr("src", data[i].image);
-            var cardStacked = $("<div>");
-            cardStacked.addClass("card-stacked");
-            var cardContent = $("<div>");
-            cardContent.addClass("card-content");
-            var h3Tag = $("<h5>");
-            h3Tag.text(data[i].title);
-            var pTag = $("<p>");
-            pTag.text(data[i].summary);
-            var cardAction = $("<div>");
-            cardAction.addClass("card-action");
-            var cardButton = $("<a>");
-            cardButton.attr({
-                "href": "#",
-                id: i,
-                class: "waves-effect waves-light btn orange"
+            for (var i = 0; i < data.length; i++) {
+                var horiCard = $("<div>");
+                horiCard.attr({
+                    class: "card horizontal"
+                })
+                var imgCard = $("<div>");
+                imgCard.addClass("card-image");
+                var image = $("<img>");
+                image.attr("src", data[i].image);
+                var cardStacked = $("<div>");
+                cardStacked.addClass("card-stacked");
+                var cardContent = $("<div>");
+                cardContent.addClass("card-content");
+                var h3Tag = $("<h5>");
+                h3Tag.text(data[i].title);
+                var pTag = $("<p>");
+                pTag.text(data[i].summary);
+                var cardAction = $("<div>");
+                cardAction.addClass("card-action");
+                var cardButton = $("<button>");
+                cardButton.attr({
+                    "data-index": i,
+                    "class": "waves-effect waves-light btn orange cardButton"
+                });
+                cardButton.text("Save Article");
+                var linkButton = $("<a>");
+                linkButton.attr({
+                    "href": data[i].link,
+                    "data-index": i,
+                    class: "waves-effect waves-light btn blue"
+                });
+                linkButton.text("Go to Article");
+
+                cardAction.append(cardButton, linkButton);
+                cardContent.append(h3Tag, pTag);
+                cardStacked.append(cardContent, cardAction);
+                imgCard.append(image);
+                horiCard.append(imgCard, cardStacked);
+
+                $("#articleContainer").append(horiCard);
+
+            }
+            $(".cardButton").on("click", function (event) {
+                event.preventDefault();
+                var index = $(this).data("index");
+                console.log(data[index]);
             });
-            cardButton.text("Save Article");
-            var linkButton = $("<a>");
-            linkButton.attr({
-                "href": data[i].link,
-                id: i,
-                class: "waves-effect waves-light btn blue"
-            });
-            linkButton.text("Go to Article");
+        });
 
-            cardAction.append(cardButton, linkButton);
-            cardContent.append(h3Tag, pTag);
-            cardStacked.append(cardContent, cardAction);
-            imgCard.append(image);
-            horiCard.append(imgCard, cardStacked);
-
-            $("#articleContainer").append(horiCard);
-
-        }
     });
 });
 
-$(".btn").click(event => {
-    event.preventDefault();
-    console.log("something happened");
-});
+
 
 // To Do
 // POST
