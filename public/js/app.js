@@ -46,10 +46,14 @@ $(document).ready(function () {
                 $("#articleContainer").append(horiCard);
 
             }
+            // Save Article to MongoDB
             $(".cardButton").on("click", function (event) {
                 event.preventDefault();
                 var index = $(this).data("index");
-                console.log(data[index]);
+                var dataObjext = data[index];
+                $.post("/submit", dataObjext, function (response) {
+                    alert("Article Saved!");
+                });
             });
         });
 
