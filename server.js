@@ -4,6 +4,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const cheerio = require("cheerio");
 const axios = require("axios");
+const Article = require("./model/Article");
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
@@ -21,7 +22,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
 // Database Model
-const db = require('./model');
+// const db = require('./model');
 // const Article = require('./model/Article.js');
 
 // Initialize Express
@@ -40,7 +41,7 @@ app.use(express.static('public'));
 
 
 app.post("/submit", (req, res) => {
-    db.Article.create(req.body)
+    Article.create(req.body)
         .then(dbArticle => {
             res.json(dbArticle);
         })
@@ -50,7 +51,7 @@ app.post("/submit", (req, res) => {
 app.get("/", (req, res) => res.send('Hello World!'));
 
 app.get("/all", (req, res) => {
-    db.Article.find({})
+    Article.find({})
         .then(dbArticle => {
             res.json(dbArticle);
         })
