@@ -9,19 +9,20 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 // Connect to the Mongo DB
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
-db.on("error", error => {
-    console.log("Mongoose Error: ", error)
-});
+// db.on("error", error => {
+//     console.log("Mongoose Error: ", error)
+// });
 
-db.once("open", () => {
-    console.log("Mongoose connection successful");
-});
+// db.once("open", () => {
+//     console.log("Mongoose connection successful");
+// });
 
 
 // Database Model
-const Article = require('./model/Article.js');
+const db = require('./model');
+// const Article = require('./model/Article.js');
 
 // Initialize Express
 const app = express();
@@ -39,7 +40,7 @@ app.use(express.static('public'));
 
 
 app.post("/submit", (req, res) => {
-    Article.create(req.body)
+    db.Article.create(req.body)
         .then(dbArticle => {
             res.json(dbArticle);
         })
@@ -49,7 +50,7 @@ app.post("/submit", (req, res) => {
 app.get("/", (req, res) => res.send('Hello World!'));
 
 app.get("/all", (req, res) => {
-    Article.find({})
+    db.Article.find({})
         .then(dbArticle => {
             res.json(dbArticle);
         })
