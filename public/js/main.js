@@ -52,6 +52,7 @@ $(document).ready(function () {
                 var index = $(this).data("index");
                 var dataObjext = data[index];
                 $.post("/submit", dataObjext, function (response) {
+                    console.log(response);
                     alert("Article Saved!");
                 });
             });

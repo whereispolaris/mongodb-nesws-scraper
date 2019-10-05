@@ -10,20 +10,6 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 // Connect to the Mongo DB
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-// const db = mongoose.connection;
-
-// db.on("error", error => {
-//     console.log("Mongoose Error: ", error)
-// });
-
-// db.once("open", () => {
-//     console.log("Mongoose connection successful");
-// });
-
-
-// Database Model
-// const db = require('./model');
-// const Article = require('./model/Article.js');
 
 // Initialize Express
 const app = express();
