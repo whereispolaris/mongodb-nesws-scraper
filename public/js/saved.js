@@ -23,21 +23,21 @@ $(document).ready(function () {
             pTag.text(data[i].summary);
             var cardAction = $("<div>");
             cardAction.addClass("card-action");
-            var cardButton = $("<button>");
-            cardButton.attr({
+            var commentButton = $("<button>");
+            commentButton.attr({
                 "data-index": i,
-                "class": "waves-effect waves-light btn orange cardButton"
+                "class": "waves-effect waves-light btn blue commentButton"
             });
-            cardButton.text("Save Article");
-            var linkButton = $("<a>");
-            linkButton.attr({
+            commentButton.text("Add Comment");
+            var deleteButton = $("<a>");
+            deleteButton.attr({
                 "href": data[i].link,
                 "data-index": i,
-                class: "waves-effect waves-light btn blue"
+                class: "waves-effect btn red"
             });
-            linkButton.text("Go to Article");
+            deleteButton.text("Delete Article");
 
-            cardAction.append(cardButton, linkButton);
+            cardAction.append(commentButton, deleteButton);
             cardContent.append(h3Tag, pTag);
             cardStacked.append(cardContent, cardAction);
             imgCard.append(image);
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
         }
         // Save Comment to MongoDB
-        $(".cardButton").on("click", function (event) {
+        $(".commentButton").on("click", function (event) {
             event.preventDefault();
             var index = $(this).data("index");
             var dataObjext = data[index];
