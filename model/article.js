@@ -4,11 +4,6 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 const ArticleSchema = new Schema({
-    // * Title
-    // * link
-    // * image
-    // * summary
-
     title: {
         type: String,
         trim: true,
@@ -28,6 +23,9 @@ const ArticleSchema = new Schema({
         type: String,
         trim: true,
         required: "Summary is Required"
+    },
+    comment: {
+        type: Array
     }
 });
 

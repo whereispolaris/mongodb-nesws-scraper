@@ -2,7 +2,7 @@ $(document).ready(function () {
     console.log("ready");
     event.preventDefault();
     $.getJSON("/all", data => {
-        console.log(data);
+        // console.log(data);
 
         for (var i = 0; i < data.length; i++) {
             var horiCard = $("<div>");
@@ -29,11 +29,10 @@ $(document).ready(function () {
                 "class": "waves-effect waves-light btn blue commentButton"
             });
             commentButton.text("Add Comment");
-            var deleteButton = $("<a>");
+            var deleteButton = $("<button>");
             deleteButton.attr({
-                "href": data[i].link,
                 "data-index": i,
-                class: "waves-effect btn red"
+                class: "waves-effect btn red deleteButton"
             });
             deleteButton.text("Delete Article");
 
@@ -46,17 +45,21 @@ $(document).ready(function () {
             $("#savedArticleContainer").append(horiCard);
 
         }
+
+        // This is not working yet
+        $(".deleteButton").on("click", function (event) {
+            event.preventDefault();
+            var index = $(this).data("index");
+            var articleID = data[index]._id;
+            $.post("/delete", articleID, function (response) {
+                console.log(response);
+            });
+        });
+
         // Save Comment to MongoDB
         $(".commentButton").on("click", function (event) {
             event.preventDefault();
-            var index = $(this).data("index");
-            var dataObjext = data[index];
-            // Post comment
-            $.post("/submit", dataObjext, function (response) {
-                alert("Comment Saved!");
-                // Write error response!
-            });
-
+            console.log("comment button");
         });
     });
 });

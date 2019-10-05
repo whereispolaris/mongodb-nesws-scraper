@@ -6,19 +6,11 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const Article = require("./model/Article");
 
-var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // Connect to the Mongo DB
-// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-mongoose.connect(db, (error) => {
-    if (error) {
-        console.log(error)
-    }
-    else {
-        console.log("DB Connection successfull");
-    }
-});
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
 
 // Initialize Express
 const app = express();
@@ -39,16 +31,43 @@ app.post("/submit", (req, res) => {
     Article.create(req.body)
         .then(dbArticle => {
             res.json(dbArticle);
-        })
+        });
 });
 
+// Delete Route - Not working yet
+app.post("/delete", (req, res) => {
+    Article.remove({
+        // Mongo is not accepting this
+        _id: `ObjectId("${req.params.id}")`
+    }).then(dbArticle => {
+        res.send(dbArticle);
+    }).catch(err => {
+        res.json(err);
+    })
+    res.send("not working yet");
+})
 
-app.get("/", (req, res) => res.send('Hello World!'));
-
+// View All Saved Articles
 app.get("/all", (req, res) => {
     Article.find({})
         .then(dbArticle => {
             res.json(dbArticle);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+})
+
+// Add comment Route - Not working yet
+app.post("/comment", (req, res) => {
+    const id = req.body.id
+    const comment = req.body.comment
+    Article.update({
+        // Mongo is not accepting this
+        _id: id,
+    }, { $push: { "comment": comment } })
+        .then(dbArticle => {
+            res.json(dbArticle)
         })
         .catch(err => {
             res.json(err);
