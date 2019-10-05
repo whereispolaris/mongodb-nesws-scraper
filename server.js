@@ -6,10 +6,19 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const Article = require("./model/Article");
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(db, (error) => {
+    if (error) {
+        console.log(error)
+    }
+    else {
+        console.log("DB Connection successfull");
+    }
+});
 
 // Initialize Express
 const app = express();
