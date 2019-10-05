@@ -36,7 +36,7 @@ app.post("/submit", (req, res) => {
 
 // Delete Route - Not working yet
 app.post("/delete", (req, res) => {
-    Article.remove({
+    Article.deleteOne({
         // Mongo is not accepting this
         _id: `ObjectId("${req.params.id}")`
     }).then(dbArticle => {
