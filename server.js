@@ -35,16 +35,16 @@ app.post("/submit", (req, res) => {
 });
 
 // Delete Route - Not working yet
-app.post("/delete", (req, res) => {
+app.post("/delete/:id", (req, res) => {
     Article.deleteOne({
         // Mongo is not accepting this
-        _id: `ObjectId("${req.params.id}")`
+        _id: req.params.id
     }).then(dbArticle => {
         res.send(dbArticle);
     }).catch(err => {
         res.json(err);
     })
-    res.send("not working yet");
+    res.send("It's working!");
 })
 
 // View All Saved Articles
@@ -59,9 +59,7 @@ app.get("/all", (req, res) => {
 })
 
 // Add comment Route - Not working yet
-app.post("/comment", (req, res) => {
-    const id = req.body.id
-    const comment = req.body.comment
+app.post("/comment/:id", (req, res) => {
     Article.update({
         // Mongo is not accepting this
         _id: id,
