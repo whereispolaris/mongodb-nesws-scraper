@@ -51,8 +51,9 @@ $(document).ready(function () {
             event.preventDefault();
             var index = $(this).data("index");
             var articleID = data[index]._id;
-            $.post("/delete", articleID, function (response) {
-                console.log(response);
+            console.log(articleID);
+            $.post("/delete/" + articleID, function (response) {
+                alert("Article " + articleID + " deleted!");
             });
         });
 
