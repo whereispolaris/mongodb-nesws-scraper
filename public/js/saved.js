@@ -48,13 +48,13 @@ $(document).ready(function () {
         }
 
         // Delete Article from MongoDB
-        $(".deleteButton").on("click", function (event) {
-            event.preventDefault();
+        $(".deleteButton").on("click", function () {
             var index = $(this).data("index");
             var articleID = data[index]._id;
             console.log(articleID);
             $.post("/delete/" + articleID, function (response) {
                 alert("Article " + articleID + " deleted!");
+                location.reload();
             });
         });
 
@@ -104,8 +104,6 @@ $(document).ready(function () {
 
             // Add Comment to MongoDB
             $("#commentForm").on("submit", function (event) {
-                event.preventDefault();
-
                 commentObject = {
                     "_id": articleID,
                     "comment": $("#commentInput").val()
