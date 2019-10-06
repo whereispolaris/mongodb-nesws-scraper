@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    console.log("ready");
+    $('.modal').modal();
     event.preventDefault();
     $.getJSON("/all", data => {
         // console.log(data);
@@ -27,13 +27,14 @@ $(document).ready(function () {
             var commentButton = $("<button>");
             commentButton.attr({
                 "data-index": i,
-                "class": "waves-effect waves-light btn blue commentButton"
+                "class": "waves-effect waves-light btn blue commentButton modal-trigger",
+                "data-target": "modal1"
             });
-            commentButton.text("Add Comment");
+            commentButton.text("Comments");
             var deleteButton = $("<button>");
             deleteButton.attr({
                 "data-index": i,
-                class: "waves-effect btn red deleteButton"
+                "class": "waves-effect btn red deleteButton"
             });
             deleteButton.text("Delete Article");
             // Append elements
