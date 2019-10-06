@@ -87,10 +87,9 @@ $(document).ready(function () {
                 // Delete Comment (CommentID, ArticleID)
             }
 
-            // Add Comment to MongoDB
+            // Input Form Elements
             var commentForm = $("<form>");
             commentForm.attr("id", "commentForm");
-
             var commentInput = $("<input>");
             commentInput.attr({
                 "id": "commentInput",
@@ -101,12 +100,21 @@ $(document).ready(function () {
             inputLabel.text("Comment");
 
             commentForm.append(commentInput, inputLabel);
-
             $(".modal-content").append(comentHeader, commentsBox, commentForm);
 
+            // Add Comment to MongoDB
             $("#commentForm").on("submit", function (event) {
                 event.preventDefault();
-                console.log($("#commentInput").val());
+
+                commentObject = {
+                    "_id": articleID,
+                    "comment": $("#commentInput").val()
+                };
+                console.log(commentObject);
+                $.post("/comment", commentObject, function (response) {
+                    console.log(response);
+                    alert("Comment Saved!");
+                });
             })
         });
     });
