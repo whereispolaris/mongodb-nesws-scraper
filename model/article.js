@@ -25,7 +25,9 @@ const ArticleSchema = new Schema({
         required: "Summary is Required"
     },
     comment: {
-        type: Array
+        type: Array,
+        required: true,
+        default: []
     }
 });
 
