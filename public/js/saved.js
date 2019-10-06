@@ -69,28 +69,45 @@ $(document).ready(function () {
             comentHeader.attr("id", "coment-header");
             comentHeader.text("Comments for " + articleID);
 
-            var commentBox = $("<div>");
-            commentBox.addClass("commentBox");
+            var commentsBox = $("<div>");
+            commentsBox.addClass("commentsBox");
 
             // Display Comments
             if (data[index].comment.length === 0) {
                 console.log("there are no comments to display")
-                commentBox.text("There are no comments to display.");
+                commentsBox.text("There are no comments to display.");
             }
             else {
                 for (var c = 0; c < data[index].comment.length; c++) {
                     var commentItem = $("<p>");
                     commentItem.attr("comment-id", c);
                     commentItem.text(data[index].comment[c]);
-                    commentBox.append(commentItem);
+                    commentsBox.append(commentItem);
                 }
                 // Delete Comment (CommentID, ArticleID)
             }
 
             // Add Comment to MongoDB
+            var commentForm = $("<form>");
+            commentForm.attr("id", "commentForm");
 
+            var commentInput = $("<input>");
+            commentInput.attr({
+                "id": "commentInput",
+                "class": "materialize-textarea"
+            })
+            var inputLabel = $("<label>");
+            inputLabel.attr("for", "commentInput");
+            inputLabel.text("Comment");
 
-            $(".modal-content").append(comentHeader, commentBox);
+            commentForm.append(commentInput, inputLabel);
+
+            $(".modal-content").append(comentHeader, commentsBox, commentForm);
+
+            $("#commentForm").on("submit", function (event) {
+                event.preventDefault();
+                console.log($("#commentInput").val());
+            })
         });
     });
 });
