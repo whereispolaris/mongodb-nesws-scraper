@@ -9,6 +9,7 @@ $(document).ready(function () {
             horiCard.attr({
                 class: "card horizontal"
             })
+            // Generate elements
             var imgCard = $("<div>");
             imgCard.addClass("card-image");
             var image = $("<img>");
@@ -35,18 +36,17 @@ $(document).ready(function () {
                 class: "waves-effect btn red deleteButton"
             });
             deleteButton.text("Delete Article");
-
+            // Append elements
             cardAction.append(commentButton, deleteButton);
             cardContent.append(h3Tag, pTag);
             cardStacked.append(cardContent, cardAction);
             imgCard.append(image);
             horiCard.append(imgCard, cardStacked);
-
             $("#savedArticleContainer").append(horiCard);
 
         }
 
-        // This is not working yet
+        // Delete Article from MongoDB
         $(".deleteButton").on("click", function (event) {
             event.preventDefault();
             var index = $(this).data("index");
@@ -57,9 +57,16 @@ $(document).ready(function () {
             });
         });
 
-        // Save Comment to MongoDB
+        // Comments 
         $(".commentButton").on("click", function (event) {
             event.preventDefault();
+            // Open Modal
+
+            // Display Comments
+
+            // Add Comment to MongoDB
+
+            // Delete Comment (CommentID, ArticleID)
             console.log("comment button");
         });
     });
