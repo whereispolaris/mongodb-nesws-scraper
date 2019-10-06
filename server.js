@@ -34,6 +34,17 @@ app.post("/submit", (req, res) => {
         });
 });
 
+// View All Saved Articles
+app.get("/all", (req, res) => {
+    Article.find({})
+        .then(dbArticle => {
+            res.json(dbArticle);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+})
+
 // Delete Route - Not working yet
 app.post("/delete/:id", (req, res) => {
     Article.deleteOne({
@@ -47,23 +58,12 @@ app.post("/delete/:id", (req, res) => {
     res.send("It's working!");
 })
 
-// View All Saved Articles
-app.get("/all", (req, res) => {
-    Article.find({})
-        .then(dbArticle => {
-            res.json(dbArticle);
-        })
-        .catch(err => {
-            res.json(err);
-        })
-})
-
 // Add comment Route - Not working yet
-app.post("/comment/:id", (req, res) => {
-    Article.update({
+app.post("/comment/", (req, res) => {
+    Article.updateOne({
         // Mongo is not accepting this
-        _id: id,
-    }, { $push: { "comment": comment } })
+        _id: req.body._id,
+    }, { $push: { "comment": req.body.comment } })
         .then(dbArticle => {
             res.json(dbArticle)
         })
