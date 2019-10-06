@@ -61,16 +61,37 @@ $(document).ready(function () {
         // Comments 
         $(".commentButton").on("click", function (event) {
             event.preventDefault();
-            // Open Modal
+            $(".modal-content").empty();
+
+            var index = $(this).data("index");
+            var articleID = data[index]._id;
+            var comentHeader = $("<h5>");
+            comentHeader.attr("id", "coment-header");
+            comentHeader.text("Comments for " + articleID);
+
+            var commentBox = $("<div>");
+            commentBox.addClass("commentBox");
 
             // Display Comments
+            if (data[index].comment.length === 0) {
+                console.log("there are no comments to display")
+                commentBox.text("There are no comments to display.");
+            }
+            else {
+                for (var c = 0; c < data[index].comment.length; c++) {
+                    var commentItem = $("<p>");
+                    commentItem.attr("comment-id", c);
+                    commentItem.text(data[index].comment[c]);
+                    commentBox.append(commentItem);
+                }
+                // Delete Comment (CommentID, ArticleID)
+            }
 
             // Add Comment to MongoDB
 
-            // Delete Comment (CommentID, ArticleID)
-            console.log("comment button");
+
+            $(".modal-content").append(comentHeader, commentBox);
         });
     });
 });
-
 
