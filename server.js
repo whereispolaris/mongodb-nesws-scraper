@@ -4,13 +4,14 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const cheerio = require("cheerio");
 const axios = require("axios");
-const Article = require("./model/Article");
+
+// db models
+const db = require('./models');
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // Connect to the Mongo DB
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-
 
 // Initialize Express
 const app = express();
@@ -28,7 +29,7 @@ app.use(express.static('public'));
 
 
 app.post("/submit", (req, res) => {
-    Article.create(req.body)
+    db.Article.create(req.body)
         .then(dbArticle => {
             res.json(dbArticle);
         });
@@ -36,7 +37,7 @@ app.post("/submit", (req, res) => {
 
 // View All Saved Articles
 app.get("/all", (req, res) => {
-    Article.find({})
+    db.Article.find({})
         .then(dbArticle => {
             res.json(dbArticle);
         })
@@ -47,7 +48,7 @@ app.get("/all", (req, res) => {
 
 // Delete Route - Not working yet
 app.post("/delete/:id", (req, res) => {
-    Article.deleteOne({
+    db.Article.deleteOne({
         _id: req.params.id
     }).then()
     res.send("It's working!");
@@ -55,7 +56,7 @@ app.post("/delete/:id", (req, res) => {
 
 // Add comment Route - Not working yet
 app.post("/comment", (req, res) => {
-    Article.update(
+    db.Article.update(
         { _id: req.body._id },
         {
             $push: { "comment": req.body.comment }
