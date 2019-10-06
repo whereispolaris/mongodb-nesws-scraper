@@ -46,7 +46,7 @@ app.get("/all", (req, res) => {
         })
 })
 
-// Delete Route - Not working yet
+// Delete Route
 app.post("/delete/:id", (req, res) => {
     db.Article.deleteOne({
         _id: req.params.id
@@ -54,7 +54,7 @@ app.post("/delete/:id", (req, res) => {
     res.send("It's working!");
 })
 
-// Add comment Route - Not working yet
+// Add Comment Route
 app.post("/comment", (req, res) => {
     db.Article.update(
         { _id: req.body._id },
@@ -67,6 +67,20 @@ app.post("/comment", (req, res) => {
             res.json(err);
         })
 })
+
+// Delete Comment Route  
+app.post("/delete-comment", (req, res) => {
+    db.Article.update(
+        { _id: req.body._id },
+        { $pull: { comment: { $in: [req.body.comment] } } }
+    )
+        .then(comment => {
+            res.json(comment);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+});
 
 // Scrape Route
 app.get("/scrape", (req, res) => {
