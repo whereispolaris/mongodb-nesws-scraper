@@ -48,24 +48,19 @@ app.get("/all", (req, res) => {
 // Delete Route - Not working yet
 app.post("/delete/:id", (req, res) => {
     Article.deleteOne({
-        // Mongo is not accepting this
         _id: req.params.id
-    }).then(dbArticle => {
-        res.send(dbArticle);
-    }).catch(err => {
-        res.json(err);
-    })
+    }).then()
     res.send("It's working!");
 })
 
 // Add comment Route - Not working yet
-app.post("/comment/", (req, res) => {
-    Article.updateOne({
-        // Mongo is not accepting this
-        _id: req.body._id,
-    }, { $push: { "comment": req.body.comment } })
-        .then(dbArticle => {
-            res.json(dbArticle)
+app.post("/comment", (req, res) => {
+    Article.update(
+        { _id: req.body._id },
+        {
+            $push: { "comment": req.body.comment }
+        }).then(comment => {
+            res.json(comment);
         })
         .catch(err => {
             res.json(err);
@@ -94,7 +89,6 @@ app.get("/scrape", (req, res) => {
             });
             res.json(scrapeData);
         });
-    // This is not working yet 
 });
 
 app.listen(PORT, function () {
