@@ -78,14 +78,38 @@ $(document).ready(function () {
                 commentsBox.text("There are no comments to display.");
             }
             else {
+                // Generate comments
                 for (var c = 0; c < data[index].comment.length; c++) {
-                    var commentItem = $("<p>");
-                    commentItem.attr("comment-id", c);
-                    commentItem.text(data[index].comment[c]);
-                    commentsBox.append(commentItem);
+
+                    var collection = $("<div>")
+                    collection.attr({
+                        "class": "collection",
+                        "data-comment": data[index].comment[c],
+                        "data-article": articleID
+                    });
+
+                    var deleteButton = $("<button>");
+                    deleteButton.attr({
+                        "class": "btn red",
+                        "id": "deleteItem"
+                    })
+                    deleteButton.text("X");
+
+                    var collectionItem = $("<p>")
+                    collection.addClass("collection-item");
+                    collection.text(data[index].comment[c])
+
+
+                    collection.prepend(deleteButton);
+                    collection.append(collectionItem);
+                    commentsBox.append(collection);
                 }
-                // Delete Comment (CommentID, ArticleID)
+
             }
+            $("#").on("click", function (event) {
+                event.preventDefault();
+                console.log(articleID);
+            })
 
             // Input Form Elements
             var commentForm = $("<form>");
@@ -106,7 +130,7 @@ $(document).ready(function () {
             $("#commentForm").on("submit", function (event) {
                 commentObject = {
                     "_id": articleID,
-                    "comment": $("#commentInput").val()
+                    "comment": $("#commentInput").val().trim()
                 };
                 console.log(commentObject);
                 $.post("/comment", commentObject, function (response) {

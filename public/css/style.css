@@ -45,6 +45,10 @@ body {
   /* width: 100%; */
 }
 
+#deleteItem {
+  margin: 10px;
+} 
+
 .inner-jumbo {
   background: white;
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
