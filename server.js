@@ -46,7 +46,7 @@ app.get("/all", (req, res) => {
         })
 })
 
-// Delete Route
+// Delete Comment Route
 app.post("/delete/:id", (req, res) => {
     db.Article.deleteOne({
         _id: req.params.id
